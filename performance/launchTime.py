@@ -13,19 +13,24 @@ class App(object):
     #启动App
     def LaunchApp(self):
         cmd = 'adb shell am start -W -n com.android.browser/.BrowserActivity'
+        print("启动浏览器")
         self.content=os.popen(cmd)
+        
 
     #停止App
     def StopApp(self):
-        #cmd = 'adb shell am force-stop com.android.browser'
-        cmd = 'adb shell input keyevent 3'
+        cmd = 'adb shell am force-stop com.android.browser'
+        #cmd = 'adb shell input keyevent 3'
+        print("退出浏览器")
         os.popen(cmd)
 
     #获取启动时间
     def GetLaunchedTime(self):
         for line in self.content.readlines():
+#             print(line)
             if "ThisTime" in line:
                 self.startTime = line.split(":")[1]
+#                 print("ThisTime:",self.startTime)
                 break
         return self.startTime
 
@@ -39,10 +44,10 @@ class Controller(object):
     #单次测试过程
     def testprocess(self):
         self.app.LaunchApp()
-        time.sleep(5)
+        time.sleep(2)
         elpasedtime = self.app.GetLaunchedTime()
         self.app.StopApp()
-        time.sleep(3)
+        time.sleep(1)
         currenttime = self.getCurrentTime()
         self.alldata.append((currenttime, elpasedtime))
 
@@ -59,7 +64,7 @@ class Controller(object):
 
     #数据的存储
     def SaveDataToCSV(self):
-        csvfile = file('startTime2.csv', 'wb')
+        csvfile = open('startTime2.csv','w')
         writer = csv.writer(csvfile)
         writer.writerows(self.alldata)
         csvfile.close()
