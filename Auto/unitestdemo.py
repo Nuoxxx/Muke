@@ -26,15 +26,16 @@ class MyTestCase(unittest.TestCase):
         self.driver.find_element_by_id("embedded_text_editor").send_keys("mooktest")
         # 发送短信
         self.driver.find_element_by_id("send_button_sms").click()
+        exist = False
         try:
             if self.driver.find_element_by_id("recipients_editor").is_displayed():
                 exist = True
-        except Exception, e:
+        except :
             exist = False
         self.assertEqual(exist, False)
 
     def test_other(self):
-        print "test other"
+        print("test other")
         self.assertEqual(True, True)
     def tearDown(self):
         self.driver.quit()

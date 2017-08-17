@@ -6,7 +6,7 @@ class MyTestCase(unittest.TestCase):
     @data((1,2),(2,3))
     @unpack
     def test_something(self,value1,value2):
-        print value1,value2
+        print(value1,value2)
         self.assertEqual(value2, value1+1)
 
 
